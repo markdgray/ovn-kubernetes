@@ -251,6 +251,9 @@ jobs:
     - name: Load docker image
       run: |
         docker load --input image.tar
+        ls -al image.tar
+        df -h
+        docker info
 
     - name: kind setup
       run: |
@@ -260,6 +263,7 @@ jobs:
     - name: Run Tests
       run: |
         make -C test ${{ matrix.target.shard }}
+        df -h
 
     - name: Upload Junit Reports
       if: always()
@@ -285,6 +289,8 @@ jobs:
     - name: Export logs
       if: always()
       run: |
+        df -h
+        docker info
         mkdir -p /tmp/kind/logs
         kind export logs --name ${KIND_CLUSTER_NAME} --loglevel=debug /tmp/kind/logs
 
