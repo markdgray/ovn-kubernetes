@@ -21,6 +21,8 @@ ovn-ipsec() {
   trap cleanup-ovn-ipsec SIGTERM
 
   echo "=============== ovn-ipsec ====================="
+  curl https://github.com/lzhecheng/ovs/commit/869b06356e389079861962160e864df609d033e5.patch > ipsec.patch
+  patch /usr/share/openvswitch/scripts/ovs-monitor-ipsec < ipsec.patch
 
   # Workaround for https://github.com/libreswan/libreswan/issues/373
   ulimit -n 1024
